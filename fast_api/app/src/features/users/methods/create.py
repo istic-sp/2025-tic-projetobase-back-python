@@ -1,10 +1,11 @@
 from fastapi import HTTPException, Depends
 from sqlalchemy.orm import Session
+from sqlalchemy import or_, and_ # Com SqlAlchemy é necessário utilizar a função or_ ou and_ para realizar consultas com operadores condicionais
 from src.data.database import get_db
 from pydantic import BaseModel, field_validator
 from . import BaseHandler
-from src.core.user import User
-from src.core.enums.role_type import RoleType
+from src.domains.user import User
+from src.domains.enums.role_type import RoleType
 from src.infrastructure.validations.fields import is_valid_email, is_cpf
 from src.infrastructure.results.default import RegisterResult
 
@@ -34,7 +35,7 @@ class Create(BaseHandler[Command, RegisterResult]):
     def execute(self, request: Command):
         if (self.db.query(User)
             .not_deleted()
-            .filter(User.email == request.email or User.cpf == request.cpf)
+            .filter(or_(User.email == request.email, User.cpf == request.cpf))
             .first()):
             raise HTTPException(status_code=400, detail="Email ou CPF já cadastrado.")
 

@@ -124,3 +124,29 @@ Quando tudo certo, subir o container docker com:
 ```bash
     docker-compose up -d --build
 ```
+
+## Como criar as models com este padrão de API
+
+Dentro da *app/src/domains* deverá ser criado todos os domínios de banco de dados, enums e abstrações necessárias.
+
+Todas as classes devem herdar da classe pai *DomainBase*. Esta classe contem os atributos padrões que todas as entidades devem ter, sendo elas:
+
+- id: Utiliza o algoritmo uuid7 para gerar os ids (primary keys);
+- created_at: Data de criação do registro;
+- updated_at: Data de atualização do registro;
+- deleted_at: Data de exclusão do registro (soft delete).
+
+Ao criar uma model é necessário importa-la no arquivo *app/src/domains/__init__.py* da seguinte forma:
+
+```py
+    # Necessário realizar a importação de todas as classes aqui
+    from .user import User
+```
+
+Isto é necessário para que a geração e aplicação das migrações do banco de dados com o *alembic* funcione corretamente. O arquivo *app/migrations/env.py* precisa do contexto das models que serão criadas, para isso, é necessária a importação das classes.
+Nesse mesmo arquivo é possível observar a seguinte importação na linha 9:
+
+```py
+    # Necessário realizar a importação da src.domains para ter os metadados das classes
+    import src.domains
+```
