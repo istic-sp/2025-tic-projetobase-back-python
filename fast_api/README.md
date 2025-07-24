@@ -30,6 +30,12 @@ Instalando as dependências do projeto:
     poetry install fastapi
 ```
 
+Removendo uma dependência do projeto:
+
+```bash
+    poetry remove fastapi
+```
+
 Para inicializar o ambiente virtual do poetry:
 
 ```bash
@@ -90,7 +96,7 @@ Aplicando a migração:
 ```
 
 OBS 1. Talvez seja necessário ajustar as migrações auto geradas pelo alembic, então sempre verifique se as migrations estão corretas e sem erros de lógica / regra de negócio.
-OBS 2. Antes de aplicar a migração é necessário que o banco esteja criado no banco de dados (apenas o banco, não as tabelas).
+OBS 2. **Antes de aplicar a migração é necessário que o banco esteja criado no banco de dados (apenas o banco, não as tabelas)**.
 
 ### Docker
 
@@ -102,6 +108,13 @@ Sempre que for acrescentado uma nova biblioteca, ou mesmo antes de subir a aplic
     poetry check
     poetry lock
     poetry install
+```
+
+Ou tente refazer o ambiente virtual, removendo todos os ambientes criados
+
+```bash
+    poetry env remove --all
+    poetry env remove <nome_do_ambiente>
 ```
 
 Isso ajuda a garantir que o pyproject.toml está correto antes de empacotar no Docker.
