@@ -8,3 +8,4 @@ class Settings(BaseSettings):
     )
 
     DATABASE_URL: str # Precisa conter o mesmo nome da variável de ambiente
+    ENVIRONMENT: str = "development"

@@ -15,7 +15,7 @@
             ],
             "cwd": "${workspaceFolder}/fast_api/app", // Alterar nome da aplicação para "${workspaceFolder}/<nome_da_aplicação>/app", caso necessário
             "env": {
-                "PYTHONPATH": "${workspaceFolder}widgets/app/src"
+                "PYTHONPATH": "${workspaceFolder}fast_api/app/src"
             },
             "jinja": false
         }
