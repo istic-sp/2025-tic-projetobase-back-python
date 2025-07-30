@@ -4,6 +4,7 @@ from src.data.database import get_db, Base
 
 from src.domains.user import User
 from src.domains.enums.role_type import RoleType
+from src.infrastructure.security.password import hash_password
 
 class DbSeeder:
     def __init__(self, db: Session = Depends(get_db)):
@@ -15,7 +16,7 @@ class DbSeeder:
         self.db.commit()
 
     def seed_users(self):
-        admins = [User("admin@email.com", "000", RoleType.Administrator)]
+        admins = [User("admin@email.com", hash_password("Admin@123"), "000", RoleType.Administrator)]
 
         self.db.add_all(admins)
         self.db.commit()

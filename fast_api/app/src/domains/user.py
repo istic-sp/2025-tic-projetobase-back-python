@@ -13,6 +13,7 @@ class User(DomainBase, Base):
 
     email = Column(String, unique=True, nullable=False)
     cpf = Column(String, unique=True, nullable=False)
+    password = Column(String, nullable=False)
     roles = Column(IntFlagEnumType(RoleType), nullable=False, default=RoleType.Common)
 
     # 1 usuário tem várias matriculas, quem referencia usuário? prop user da entidade 'Enrollment'
@@ -29,8 +30,9 @@ class User(DomainBase, Base):
     def has_role(self, role: RoleType) -> bool:
         return (self.roles & role) == role
     
-    def __init__(self, email: str, cpf: str, roles: list[RoleType]):
+    def __init__(self, email: str, password: str, cpf: str, roles: list[RoleType]):
         self.email = email
+        self.password = password
         self.cpf = cpf
         self.set_roles(roles)
         

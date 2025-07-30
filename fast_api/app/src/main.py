@@ -7,6 +7,7 @@ from settings import Settings
 
 from src.features.users import users_controller
 from src.features.seeds import seeds_controller
+from src.features.auth import auth_controller
 
 app = FastAPI(
     title="Base API",
@@ -27,6 +28,7 @@ if Settings().ENVIRONMENT == "development":
     app.include_router(seeds_controller.router)
 
 # Controllers
+app.include_router(auth_controller.router)
 app.include_router(users_controller.router)
 
 # Interceptador de erros de validação de campos
